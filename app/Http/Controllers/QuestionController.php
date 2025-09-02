@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionStoreRequest;
 use App\Models\Questions;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class QuestionController extends Controller
 {
@@ -33,7 +36,34 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+        'question'  => 'required|unique:questions|max:255',
+        'options.*' => 'required',
+        'answer'    => 'required',
+    ]);
+
+        $questions = new Questions();
+        $options = [];
+        $i = 0;
+
+        foreach($request->input('options') as $value){
+            $options[$i] = $value;
+            $i++;
+        }
+
+       json_encode($options);
+
+       $questions->question = $request->input('question') ;
+       $questions->options = $options ;
+       $questions->answer = $request->input('answer') ;
+       $questions->image = "" ;
+
+       $res = $questions->save();
+       if($res)
+        return redirect()->route('questions.index')
+                          ->with('success', 'Question created successfully.');
+        return redirect()->back()->with('danger','Something went wrong!');
+
     }
 
     /**
@@ -41,7 +71,8 @@ class QuestionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $questions = Questions::find($id) ;
+         return view('questions.show',compact('questions'));
     }
 
     /**
@@ -49,7 +80,8 @@ class QuestionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $questions = Questions::find($id);
+        return view('questions.edit',compact('questions'));
     }
 
     /**
@@ -57,7 +89,27 @@ class QuestionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $questions = Questions::find($id);
+        $options = [];
+        $i = 0;
+
+        foreach($request->input('options') as $value){
+            $options[$i] = $value;
+            $i++;
+        }
+
+       json_encode($options);
+
+       $questions->question = $request->input('question') ;
+       $questions->options = $options ;
+       $questions->answer = $request->input('answer') ;
+       $questions->image = "" ;
+
+       $res = $questions->update();
+       if($res)
+        return redirect()->route('questions.index')
+                          ->with('success', 'Question updated successfully.');
+        return redirect()->back()->with('danger','Something went wrong!');
     }
 
     /**
@@ -65,6 +117,9 @@ class QuestionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $questions = Questions::find($id) ;
+        $questions->delete();
+         return redirect()->route('questions.index')
+                        ->with('success','Question deleted successfully');
     }
 }

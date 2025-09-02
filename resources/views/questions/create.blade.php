@@ -1,21 +1,22 @@
-@extends('welcome')
+@extends('app')
 
 @section('content')
 
 <div class="card mt-5">
-  <h4 class="card-header">Add New Question</h2>
+
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <h4><i class="fa fa-plus"></i> Create Question</h4>
+    <a  class="btn btn-primary" href="{{ route('questions.index') }}"> <i class="fa fa-question"></i> All Questions</a>
+  </div>
+
   <div class="card-body">
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a class="btn btn-primary btn-sm" href="{{ route('questions.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
-    </div>
-
-    <form action="{{ route('questions.store') }}" method="POST">
+    <form action="{{ route('questions.store') }}" method="POST" id="questionForm">
         @csrf
 
-        <div class="mb-3">
-            <label for="inputName" class="form-label"><strong>Question:</strong></label>
-            <input
+        <div class="form-group mb-3">
+            <label class="mb-2"><strong>Question:</strong></label>
+            <input required
                 type="text"
                 name="question"
                 class="form-control @error('name') is-invalid @enderror"
@@ -27,12 +28,12 @@
         </div>
 
 
-        <div class="mb-3">
-            <label for="inputName" class="form-label"><strong>Option 1:</strong></label>
-            <input
+        <div class="form-group mb-3">
+            <label class="mb-2" ><strong>Option 1:</strong></label>
+            <input required
                 type="text"
                 name="options[]"
-                class="form-control @error('name') is-invalid @enderror"
+                class="form-control @error('options') is-invalid @enderror"
                 id="Option"
                 placeholder="Enter Option 1">
             @error('option')
@@ -40,12 +41,12 @@
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="inputName" class="form-label"><strong>Option 2:</strong></label>
-            <input
+        <div class="form-group mb-3">
+            <label class="mb-2" ><strong>Option 2:</strong></label>
+            <input required
                 type="text"
                 name="options[]"
-                class="form-control @error('name') is-invalid @enderror"
+                class="form-control @error('options') is-invalid @enderror"
                 id="Option"
                 placeholder="Enter Option 2">
             @error('option')
@@ -54,12 +55,12 @@
         </div>
 
 
-        <div class="mb-3">
-            <label for="inputName" class="form-label"><strong>Option 3:</strong></label>
-            <input
+        <div class="form-group mb-3">
+            <label class="mb-2" ><strong>Option 3:</strong></label>
+            <input required
                 type="text"
                 name="options[]"
-                class="form-control @error('name') is-invalid @enderror"
+                class="form-control @error('options') is-invalid @enderror"
                 id="Option"
                 placeholder="Enter Option 3">
             @error('option')
@@ -68,12 +69,12 @@
         </div>
 
 
-      <div class="mb-3">
-            <label for="inputName" class="form-label"><strong>Option 4:</strong></label>
-            <input
+      <div class="form-group mb-3">
+            <label class="mb-2" ><strong>Option 4:</strong></label>
+            <input required
                 type="text"
                 name="options[]"
-                class="form-control @error('name') is-invalid @enderror"
+                class="form-control @error('options') is-invalid @enderror"
                 id="Option"
                 placeholder="Enter Option 4">
             @error('option')
@@ -81,9 +82,38 @@
             @enderror
         </div>
 
+    <div class="form-group mb-3">
+<label class="mb-2" ><strong>Answer:</strong></label>
+    <select class="form-control" name="answer" required>
+            <option value>Select Answer</option>
+            <option value="0">Option 1</option>
+            <option value="1">Option 2</option>
+            <option value="2">Option 3</option>
+            <option value="3">Option 4</option>
+        </select>
+
+    </div>
+
+
         <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Submit</button>
+
     </form>
 
   </div>
 </div>
+
+<style>
+    .error{
+        color:red;
+    }
+</style>
+
+@endsection
+
+@section('script')
+
+<script>
+$("#questionForm").validate();
+</script>
+
 @endsection

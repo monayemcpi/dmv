@@ -1,25 +1,20 @@
-@extends('welcome')
+@extends('app')
 
 @section('content')
 
 <div class="card mt-5">
-  <h4 class="card-header">Questions</h4>
+
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <h4> <i class="fa fa-question"></i> Questions</h4>
+    <a  class="btn btn-primary" href="{{ route('questions.create') }}"> <i class="fa fa-plus"></i> Create New Question</a>
+  </div>
+
   <div class="card-body">
-
-        @session('success')
-            <div class="alert alert-success" role="alert"> {{ $value }} </div>
-        @endsession
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-success btn-sm" href="{{ route('questions.create') }}"> <i class="fa fa-plus"></i> Create New Question</a>
-        </div>
-
         <table class="table table-bordered table-striped mt-4">
             <thead>
                 <tr>
-                    <th width="80px">No</th>
-                    <th>Name</th>
-                    <th>Details</th>
+                    <th width="80px">Sl #</th>
+                    <th>Question</th>
                     <th width="250px">Action</th>
                 </tr>
             </thead>
@@ -29,8 +24,15 @@
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $question->question }}</td>
-                    <td>{{ $question->options }}</td>
-                    <td></td>
+                    <td class="d-flex justify-content-between">
+                        <a href="{{ route('questions.edit',$question->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                        <a href="{{ route('questions.show',$question->id) }}" class="btn btn-sm btn-success text-white"><i class="fa fa-eye"></i> View</a>
+                        <form action="{{ route('questions.destroy',$question->id) }}" method="POST">
+                             @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @empty
                 <tr>
@@ -38,11 +40,8 @@
                 </tr>
             @endforelse
             </tbody>
-
         </table>
-
         {!! $questions->links() !!}
-
   </div>
 </div>
 @endsection
