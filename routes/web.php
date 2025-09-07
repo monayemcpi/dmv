@@ -9,4 +9,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::resource('questions', QuestionController::class);
-Route::resource('exam', ExamController::class);
+Route::resource('exams', ExamController::class);
