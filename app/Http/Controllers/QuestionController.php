@@ -16,11 +16,13 @@ class QuestionController extends Controller
      */
     public function index() 
     {
-       $questions = Questions::latest()->paginate(5);
+       $questions = Questions::latest()->get();
+       $debug=123;
+       return view('questions.index',compact('questions'));
 
 
-        return view('questions.index', compact('questions'))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
+        // return view('questions.index', compact('questions'))
+        //             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

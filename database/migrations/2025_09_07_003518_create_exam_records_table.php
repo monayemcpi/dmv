@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exams', function (Blueprint $table) {
+        Schema::create('exam_records', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('question_id');
-            $table->bigInteger('exam_record_id');
-            $table->bigInteger('answer');
-            $table->boolean('status');
+            $table->date('date');
+            $table->time('time');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exams');
+        Schema::dropIfExists('exam_records');
     }
 };

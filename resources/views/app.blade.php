@@ -25,7 +25,7 @@
               <a class="nav-link text-white" href="{{ route('questions.index') }}">Questions</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Exams</a>
+              <a class="nav-link text-white" href="{{ route('exams.index') }}">Exams</a>
             </li>
           </ul>
         </div>

@@ -20,6 +20,7 @@
             </thead>
 
             <tbody>
+                @php $i=0; @endphp
             @forelse ($questions as $question)
                 <tr>
                     <td>{{ ++$i }}</td>
@@ -41,7 +42,6 @@
             @endforelse
             </tbody>
         </table>
-        {!! $questions->links() !!}
   </div>
 </div>
 @endsection
