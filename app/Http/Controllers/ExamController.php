@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exam;
 use App\Models\ExamRecord;
 use App\Models\Questions;
+use App\Models\Result;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -14,8 +15,8 @@ class ExamController extends Controller
      */
     public function index()
     {
-       $exams = Exam::latest()->get();
-       return view('exams.index',compact('exams'));
+       $examRecord = ExamRecord::latest()->get();
+       return view('exams.index',compact('examRecord'));
 
 
         // return view('exams.index', compact('exams'))
@@ -48,24 +49,45 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+        'answer'    => 'required',
+    ]);
        
         $examRecordId = $request->input('exam_record_id');
         $question_id = $request->input('question_id');
         $answer = $request->input('answer');
 
+        // Store record to exam table
         $exams = new Exam();
         $exams->question_id = $question_id ;
         $exams->exam_record_id = $examRecordId;
         $exams->answer = $answer;
         $exams->status = $this->answerStatus($question_id,$answer);
         $exams->save();
+
+        // Store record to result table
+        $result = new Result();
+        $result->question_id = $question_id ;
+        $result->exam_record_id = $examRecordId;
+        $result->answer = $answer;
+        $result->status = $this->answerStatus($question_id,$answer);
+        $result->save();
+
+
        
         $questionIds = Exam::pluck('question_id')->all();
-        $question = Questions::whereNotIn('id', $questionIds)->first();
-        if($question)
-            return view('exams.create',compact('examRecordId','question'));
+        $question = Questions::whereNotIn('id', $questionIds)->inRandomOrder()->first();
 
-        return ;
+        if($question){
+            return view('exams.create',compact('examRecordId','question'));
+        }
+            
+        else{
+            //Exam::truncate();
+             $examRecord = ExamRecord::latest()->get();
+            return view('exams.index',compact('examRecord'))->with('success','Exam Finished!');
+
+        }
 
         
 

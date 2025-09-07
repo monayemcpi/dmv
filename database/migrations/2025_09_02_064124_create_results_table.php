@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('question_id');
+            $table->bigInteger('exam_record_id');
+            $table->bigInteger('answer');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

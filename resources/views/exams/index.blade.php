@@ -22,7 +22,7 @@
 
             <tbody>
                 @php $i=0; @endphp
-            @forelse ($exams as $exam)
+            @forelse ($examRecord as $exam)
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $exam->date }}</td>
