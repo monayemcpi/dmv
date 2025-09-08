@@ -12,14 +12,14 @@
   <div class="card-body">
 
     <form action="{{ route('exams.store') }}" method="POST" id="questionForm">
-      <input type="text" name="exam_record_id" value="{{ $examRecordId }}" readonly class="form-control">
+      <input type="hidden" name="exam_record_id" value="{{ $examRecordId }}" readonly class="form-control">
         @csrf
 
         <h5 class="mb-2"><strong>Question:</strong></h5><hr>  
         <div class="form-group mb-3">
             <h5>{{ $question->question }}?</h4>
             <input required
-                type="text"
+                type="hidden"
                 name="question_id"
                 class="form-control"
                 readonly
@@ -30,7 +30,6 @@
             @enderror
         </div>
 
-       <h5 class="mb-2"><strong>Options:</strong></h5><hr>  
        <div class="options mb-3">
         @php $i=0; @endphp
           @foreach ($question->options as $option )

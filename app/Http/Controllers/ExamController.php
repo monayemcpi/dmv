@@ -7,6 +7,7 @@ use App\Models\ExamRecord;
 use App\Models\Questions;
 use App\Models\Result;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExamController extends Controller
 {
@@ -107,7 +108,12 @@ class ExamController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $result = DB::table('results')
+        ->join('questions', 'results.question_id', '=', 'questions.id')
+        ->select('questions.question', 'results.status')
+        ->where('results.exam_record_id',$id)
+        ->get();
+        return view('exams.show',compact('result'));
     }
 
     /**
@@ -135,10 +141,13 @@ class ExamController extends Controller
     }
 
     public function answerStatus($id,$answer){
-        $question = Questions::find($id)->first();
+   
+        $question = Questions::where('id',$id)->first();
+        $debug=123;
         if($question->answer == $answer){
             return true;
         }
+
         return false;
     }
 
