@@ -42,6 +42,7 @@ class QuestionController extends Controller
         'question'  => 'required|unique:questions|max:255',
         'options.*' => 'required',
         'answer'    => 'required',
+        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
         $questions = new Questions();
@@ -58,9 +59,12 @@ class QuestionController extends Controller
        $questions->question = $request->input('question') ;
        $questions->options = $options ;
        $questions->answer = $request->input('answer') ;
-       $questions->image = "" ;
-
+       
+       $imageName = time().'.'.$request ->file('image')->extension();  
+       $questions->image = 'public/images/' . $imageName;
        $res = $questions->save();
+       
+       $request->image->move(public_path('images'), $imageName);
        if($res)
         return redirect()->route('questions.index')
                           ->with('success', 'Question created successfully.');

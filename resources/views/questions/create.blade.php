@@ -11,8 +11,9 @@
 
   <div class="card-body">
 
-    <form action="{{ route('questions.store') }}" method="POST" id="questionForm">
+    <form action="{{ route('questions.store') }}" method="POST" id="questionForm" enctype="multipart/form-data">
         @csrf
+
 
         <div class="form-group mb-3">
             <label class="mb-2"><strong>Question:</strong></label>
@@ -22,6 +23,21 @@
                 class="form-control @error('name') is-invalid @enderror"
                 id="inputName"
                 placeholder="Enter question">
+            @error('name')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        
+ <div class="form-group mb-3">
+            <label class="mb-2"><strong>Upload Image:</strong></label>
+            <img src="" alt="" id = "imgPrev" style =" width: 100px; height: 100px ">
+            <input 
+                type="file"
+                accept="image/*" 
+                name="image"
+                class="form-control @error('name') is-invalid @enderror"
+                id="inputImg"
+                placeholder="">
             @error('name')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -114,6 +130,18 @@
 
 <script>
 $("#questionForm").validate();
+// Image Preview
+inputImg.onchange = evt => {
+const [file] = inputImg.files
+// debugger;
+  if (file) {
+    imgPrev.src = URL.createObjectURL(file)
+  }
+}
+
+
+
+
 </script>
 
 @endsection

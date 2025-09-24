@@ -15,6 +15,11 @@
         <label class="mb-2">Question</label>
         <input type="text" class="form-control" value="{{ $questions->question }}" readonly>
     </div>
+
+     <div class="form-group mb-3">
+        <label class="mb-2">Image</label>
+        <img src="{{asset($questions->image)}}" alt="">
+    </div>
     @php $i=1 @endphp
     @foreach ($questions->options as $option )
         <div class="form-group mb-3">
