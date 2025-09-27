@@ -11,7 +11,8 @@
 
   <div class="card-body">
 
-    <form action="{{ route('questions.update', $questions->id) }}" method="POST">
+    <form action="{{ route('questions.update', $questions->id) }}" method="POST" enctype="multipart/form-data">
+        
        @csrf
         @method('PUT')
 
@@ -27,6 +28,31 @@
             @error('name')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
+        </div>
+       
+        
+        <div class="form-group mb-3">
+            <label class="mb-2"><strong>Upload Image:</strong></label>
+            @if ($questions -> image) 
+            <img src="{{ asset($questions -> image)  }}" alt="" style =" width: 100px; height: 100px " id = "imgPrev" >
+
+            @else
+             <img src="" alt="" style =" width: 100px; height: 100px " id = "imgPrev" >
+
+                
+            @endif
+              
+            <input 
+                type="file"
+                accept="image/*" 
+                name="image"
+                class="form-control @error('name') is-invalid @enderror"
+                id="inputImg"
+                placeholder="">
+            @error('name')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+
         </div>
 
         @php $i=1; $ck=1;@endphp
@@ -68,4 +94,23 @@
 
   </div>
 </div>
+@endsection
+@section('script')
+
+<script>
+$("#questionForm").validate();
+// Image Preview
+inputImg.onchange = evt => {
+const [file] = inputImg.files
+// debugger;
+  if (file) {
+    imgPrev.src = URL.createObjectURL(file)
+  }
+}
+
+
+
+
+</script>
+
 @endsection
