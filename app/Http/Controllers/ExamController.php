@@ -149,6 +149,7 @@ class ExamController extends Controller
         // Delete Exam Record
         $examRecord = ExamRecord::find($id);
         $examRecord->delete();
+         Exam::truncate();
        return redirect()->route('exams.index');
 
     }
