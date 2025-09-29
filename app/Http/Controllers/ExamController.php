@@ -84,7 +84,7 @@ class ExamController extends Controller
         }
             
         else{
-            //Exam::truncate();
+            Exam::truncate();
              $examRecord = ExamRecord::latest()->get();
             return view('exams.index',compact('examRecord'))->with('success','Exam Finished!');
 
