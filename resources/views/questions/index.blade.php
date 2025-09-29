@@ -10,7 +10,7 @@
   </div>
 
   <div class="card-body">
-        <table class="table table-bordered table-striped mt-4">
+        <table class="table table-bordered table-striped mt-4 data-table">
             <thead>
                 <tr>
                     <th width="80px">Sl #</th>
@@ -44,4 +44,17 @@
         </table>
   </div>
 </div>
+@endsection
+
+
+@section('script')
+
+<script>
+
+$(document).ready( function () {
+    $('.data-table').DataTable();
+} );
+
+</script>
+
 @endsection
