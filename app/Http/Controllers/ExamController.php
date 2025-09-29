@@ -80,7 +80,13 @@ class ExamController extends Controller
         $question = Questions::whereNotIn('id', $questionIds)->inRandomOrder()->first();
 
         if($question){
-            return view('exams.create',compact('examRecordId','question'));
+            if($this->answerStatus($question_id,$answer) == true){
+                return view('exams.create',compact('examRecordId','question'))->with('success','Correct Answer');
+            }
+            else{
+                return view('exams.create',compact('examRecordId','question'))->with('danger','Wrong Answer');
+            }
+               
         }
             
         else{
@@ -137,7 +143,17 @@ class ExamController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Delete Exam Records from Result
+        $results = Result::where('exam_record_id',$id)->get();
+        foreach($results as $result){
+            $resultDel=Result::find($result->id);
+            $resultDel->delete();
+        }
+        // Delete Exam Record
+        $examRecord = ExamRecord::find($id);
+        $examRecord->delete();
+       return redirect()->route('exams.index');
+
     }
 
     public function answerStatus($id,$answer){
