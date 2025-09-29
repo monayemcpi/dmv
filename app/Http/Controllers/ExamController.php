@@ -78,14 +78,11 @@ class ExamController extends Controller
        
         $questionIds = Exam::pluck('question_id')->all();
         $question = Questions::whereNotIn('id', $questionIds)->inRandomOrder()->first();
+        $answerStatus = $this->answerStatus($question_id,$answer);
 
         if($question){
-            if($this->answerStatus($question_id,$answer) == true){
-                return view('exams.create',compact('examRecordId','question'))->with('success','Correct Answer');
-            }
-            else{
-                return view('exams.create',compact('examRecordId','question'))->with('danger','Wrong Answer');
-            }
+           
+            return view('exams.create',compact('examRecordId','question','answerStatus'));
                
         }
             

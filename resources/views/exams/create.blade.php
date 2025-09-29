@@ -9,7 +9,31 @@
     <a  class="btn btn-primary" href="{{ route('exams.index') }}"> <i class="fa fa-question"></i> All Exams</a>
   </div>
 
+
+
   <div class="card-body">
+
+        <div class="row">
+        <div class="col-md-12">
+            @if(isset($answerStatus))
+
+                @if($answerStatus == true)
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <button type="button" class="btn-close" data-dismiss="alert"
+                            aria-hidden="true"></button>
+                        <strong>Correct Answer</strong>
+                    </div>
+                @else
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <button type="button" class="btn-close" data-dismiss="alert"
+                            aria-hidden="true"></button>
+                        <strong>Warning!</strong> Wrong Answer
+                    </div>
+                @endif
+
+            @endif
+        </div>
+    </div>
 
     <form action="{{ route('exams.store') }}" method="POST" id="questionForm">
       <input type="hidden" name="exam_record_id" value="{{ $examRecordId }}" readonly class="form-control">

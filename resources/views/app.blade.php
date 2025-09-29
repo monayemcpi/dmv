@@ -41,13 +41,38 @@
 
           <div class="mt-3">
 
-            @session('success')
-                <div class="alert alert-success" role="alert"> {{ $value }} </div>
-            @endsession
-
-            @session('danger')
-                <div class="alert alert-danger" role="alert"> {{ $value }} </div>
-            @endsession
+              <!--  Alert -->
+              <div class="row">
+                  <div class="col-md-12">
+                      @if(Session::has('success'))
+                      <div class="alert alert-success alert-dismissible fade show">
+                          <button type="button" class="btn-close" data-dismiss="alert"
+                              aria-hidden="true"></button>
+                          <strong>Success!</strong> {{Session::get('success')}}
+                      </div>
+                      @endif @if(Session::has('danger'))
+                      <div class="alert alert-danger alert-dismissible fade show">
+                          <button type="button" class="btn-close" data-dismiss="alert"
+                              aria-hidden="true"></button>
+                          <strong>Warning!</strong> {{Session::get('danger')}}
+                      </div>
+                      @endif @if (count($errors) > 0)
+                      <div class="alert alert-danger alert-dismissible fade show">
+                          <button type="button" class="btn-close" data-dismiss="alert"
+                              aria-hidden="true"></button>
+                          <strong>Whoops!</strong> There were some problems with your input.
+                          <br>
+                          <br>
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                      @endif
+                  </div>
+              </div>
+              <!-- /Alert -->
 
             @if ($errors->any())
                 <div class="alert alert-danger">
