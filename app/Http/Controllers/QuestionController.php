@@ -103,7 +103,7 @@ class QuestionController extends Controller
     public function update(Request $request, string $id)
     {   
         $validated = $request->validate([
-        'question'  => 'required|unique:questions|max:255',
+        'question'  => 'required|max:255',
         'options.*' => 'required',
         'answer'    => 'required',
         'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',

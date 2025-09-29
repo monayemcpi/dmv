@@ -14,7 +14,7 @@
             <thead>
                 <tr>
                     <th width="80px">Sl #</th>
-                    <th>Exam date</th>
+                    <th>Exam date</th> 
                     <th>Score</th>
                     <th width="250px">Action</th>
                 </tr>
