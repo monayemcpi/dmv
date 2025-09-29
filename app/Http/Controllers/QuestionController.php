@@ -42,6 +42,7 @@ class QuestionController extends Controller
         'question'  => 'required|unique:questions|max:255',
         'options.*' => 'required',
         'answer'    => 'required',
+        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
         $questions = new Questions();
@@ -58,9 +59,18 @@ class QuestionController extends Controller
        $questions->question = $request->input('question') ;
        $questions->options = $options ;
        $questions->answer = $request->input('answer') ;
-       $questions->image = "" ;
+       
+       if ($request -> file('image')){
+        
+       $imageName = time().'.'.$request ->file('image')->extension();  
+       $questions->image = 'public/images/' . $imageName;
 
+       }
        $res = $questions->save();
+
+       if ($request -> file('image'))       
+       $request->image->move(public_path('images'), $imageName);
+    
        if($res)
         return redirect()->route('questions.index')
                           ->with('success', 'Question created successfully.');
@@ -89,8 +99,16 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, string $id)
-    {
+    {   
+        $validated = $request->validate([
+        'question'  => 'required|unique:questions|max:255',
+        'options.*' => 'required',
+        'answer'    => 'required',
+        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
         $questions = Questions::find($id);
         $options = [];
         $i = 0;
@@ -105,9 +123,18 @@ class QuestionController extends Controller
        $questions->question = $request->input('question') ;
        $questions->options = $options ;
        $questions->answer = $request->input('answer') ;
-       $questions->image = "" ;
+
+       if ($request -> file('image')){
+        
+       $imageName = time().'.'.$request ->file('image')->extension();  
+       $questions->image = 'public/images/' . $imageName;
+
+       }
 
        $res = $questions->update();
+        if ($request -> file('image'))       
+       $request->image->move(public_path('images'), $imageName);
+    
        if($res)
         return redirect()->route('questions.index')
                           ->with('success', 'Question updated successfully.');

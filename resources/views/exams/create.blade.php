@@ -29,6 +29,12 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+         @if ($question -> image) 
+            <img src="{{ asset($question -> image)  }}" alt="" style =" width: 100px; height: 100px " id = "imgPrev" >
+
+            
+     
+            @endif
 
        <div class="options mb-3">
         @php $i=0; @endphp
