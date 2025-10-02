@@ -10,7 +10,7 @@
   </div>
 
   <div class="card-body">
-        <table class="table table-bordered table-striped mt-4">
+        <table class="table table-bordered table-striped mt-4 data-table">
             <thead>
                 <tr>
                     <th width="80px">Sl #</th>
@@ -25,7 +25,14 @@
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $row->question }}</td>
-                    <td>{!! $row->status == 1 ?'<i class="fa-solid fa-check text-success"></i>':'<i class="fa-solid fa-x text-danger"></i>' !!}</td>
+                    <td>
+                        {!! $row->status == 1 ?'<i class="fa-solid fa-check text-success"></i>':'<i class="fa-solid fa-x text-danger"></i>' !!}
+                        {{-- @if ($row->status !=1)
+                        {{ $row->question_id }}
+                        <p><strong>Correct Answer:</strong> <br> {{ correctAnswer( $row->question_id)  }}</p>
+                            
+                        @endif --}}
+                    </td>
                 </tr>
             @empty
                 <tr>
@@ -36,4 +43,17 @@
         </table>
   </div>
 </div>
+@endsection
+
+
+@section('script')
+
+<script>
+
+$(document).ready( function () {
+    $('.data-table').DataTable();
+} );
+
+</script>
+
 @endsection

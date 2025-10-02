@@ -113,7 +113,7 @@ class ExamController extends Controller
     {
         $result = DB::table('results')
         ->join('questions', 'results.question_id', '=', 'questions.id')
-        ->select('questions.question', 'results.status')
+        ->select('questions.question', 'questions.id as question_id', 'results.status')
         ->where('results.exam_record_id',$id)
         ->get();
         return view('exams.show',compact('result'));

@@ -10,13 +10,12 @@
   </div>
 
   <div class="card-body">
-        <table class="table table-bordered table-striped mt-4">
+        <table class="table table-bordered table-striped mt-4 data-table">
             <thead>
                 <tr>
                     <th width="80px">Sl #</th>
                     <th>Exam date</th> 
                     <th>Exam time</th> 
-                    <th>Score</th>
                     <th width="250px">Action</th>
                 </tr>
             </thead>
@@ -26,9 +25,8 @@
             @forelse ($examRecord as $exam)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $exam->date }}</td>
-                    <td>{{ $exam->time }}</td>
-                    <td></td>
+                    <td>{{ date("m-d-Y", strtotime($exam->date))  }}</td>
+                    <td>{{ date('h:i:s a', strtotime($exam->time))  }}</td>
                     <td class="d-flex justify-content-between">
                         <a href="{{ route('exams.show',$exam->id) }}" class="btn btn-sm btn-success text-white"><i class="fa fa-eye"></i> View Result</a>
                         <form action="{{ route('exams.destroy',$exam->id) }}" method="POST">
@@ -47,4 +45,16 @@
         </table>
   </div>
 </div>
+@endsection
+
+@section('script')
+
+<script>
+
+$(document).ready( function () {
+    $('.data-table').DataTable();
+} );
+
+</script>
+
 @endsection
