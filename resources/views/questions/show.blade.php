@@ -12,29 +12,33 @@
   <div class="card-body">
 
     <div class="form-group mb-3">
-        <label class="mb-2">Question</label>
-        <input type="text" class="form-control" value="{{ $questions->question }}" readonly>
+        <strong class="mb-2">Question</strong>
+        <p>{{ $questions->question }}</p>
     </div>
+@if ($questions->image)
+       <div class="form-group mb-3">
+        <strong class="mb-2">Image</strong>
+        <img src="{{asset($questions->image)}}" alt="" style="width: 150px; height: 150px; object-fit: contain;">
+    </div>
+@endif
 
-     <div class="form-group mb-3">
-        <label class="mb-2">Image</label>
-        <img src="{{asset($questions->image)}}" alt="">
-    </div>
+
+
     @php $i=1 @endphp
     @foreach ($questions->options as $option )
         <div class="form-group mb-3">
-        <label class="mb-2">Option {{ $i++ }}</label>
-        <input type="text" class="form-control" value="{{ $option }}" readonly>
+        <strong class="mb-2">Option: {{ $i++ }}</strong>
+        <p>{{ $option }}</p>
     </div>
         
     @endforeach
 
     <div class="form-group">
-      <label for="">Answer : </label>
+      <strong for="">Answer : </strong>
       @if (array_key_exists($questions->answer, $questions->options))
 
       <span class="badge rounded-pill bg-success">Option {{ $questions->answer+1 }} </span>
-      <span>{{ $questions->options[$questions->answer] }}</span>
+      <p>{{ $questions->options[$questions->answer] }}</span>
 
       @else
 

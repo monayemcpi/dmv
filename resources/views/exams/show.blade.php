@@ -10,6 +10,7 @@
   </div>
 
   <div class="card-body">
+    <div class="table-responsive">
         <table class="table table-bordered table-striped mt-4 data-table">
             <thead>
                 <tr>
@@ -27,11 +28,9 @@
                     <td>{{ $row->question }}</td>
                     <td>
                         {!! $row->status == 1 ?'<i class="fa-solid fa-check text-success"></i>':'<i class="fa-solid fa-x text-danger"></i>' !!}
-                        {{-- @if ($row->status !=1)
-                        {{ $row->question_id }}
-                        <p><strong>Correct Answer:</strong> <br> {{ correctAnswer( $row->question_id)  }}</p>
-                            
-                        @endif --}}
+                         @if ($row->status !=1)<br>
+                         <em class="answer"> <strong>Ans:</strong> {{ correctAnswer( $row->question_id)  }}</em>
+                        @endif
                     </td>
                 </tr>
             @empty
@@ -41,8 +40,14 @@
             @endforelse
             </tbody>
         </table>
+        </div>
   </div>
 </div>
+
+
+
+
+
 @endsection
 
 
@@ -52,6 +57,7 @@
 
 $(document).ready( function () {
     $('.data-table').DataTable();
+
 } );
 
 </script>

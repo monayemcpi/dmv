@@ -5,11 +5,10 @@ use App\Models\Questions;
 function correctAnswer(string $id){
 
  if(isset($id)){
-    $questions= Questions::find($id)->first();
+    $questions= Questions::where('id',$id)->first();
+   //return $questions->answer;
   
-  if (array_key_exists($questions->answer, $questions->options)){
-    return $questions->options[$questions->answer];
-  }
+return $questions->options[$questions->answer];
 
  }
 

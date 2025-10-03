@@ -10,7 +10,8 @@
   </div>
 
   <div class="card-body">
-        <table class="table table-bordered table-striped mt-4 data-table">
+    <div class="table-responsive">
+ <table class="table table-bordered table-striped mt-4 data-table">
             <thead>
                 <tr>
                     <th width="80px">Sl #</th>
@@ -23,15 +24,15 @@
                 @php $i=0; @endphp
             @forelse ($questions as $question)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    <td>{{ $question->question }}</td>
-                    <td class="d-flex justify-content-between">
-                        <a href="{{ route('questions.edit',$question->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                        <a href="{{ route('questions.show',$question->id) }}" class="btn btn-sm btn-success text-white"><i class="fa fa-eye"></i> View</a>
+                    <td style="width:5%;">{{ ++$i }}</td>
+                    <td style="width:90%;">{{ $question->question }}</td>
+                    <td style="width:5%;">
+                        <a href="{{ route('questions.edit',$question->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                        <a href="{{ route('questions.show',$question->id) }}" class="btn btn-sm btn-success text-white"><i class="fa fa-eye"></i></a>
                         <form action="{{ route('questions.destroy',$question->id) }}" method="POST">
                              @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -42,6 +43,8 @@
             @endforelse
             </tbody>
         </table>
+    </div>
+       
   </div>
 </div>
 @endsection
